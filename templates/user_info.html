@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}User Profile{% endblock %}
+{% block content %} 
+    <h1 class="text-secondary"><b>{{user.first_name}} {{user.last_name}}</b></h1>
+    <p class="lead">Your current account information. </p>
+    <h6>Username:  <b>{{user.username}}</b> </h6>
+    <h6 class="mb-3">Email:  <b>{{user.email}}</b></h6>
+    <form method="POST" action="/users/{{user.username}}/delete">
+        <button type="submit" class="btn  btn-danger opacity-75 btn-sm">Delete User</button>
+        <a class="btn  btn-primary opacity-75 btn-sm" href="/users/{{user.username}}/feedback/add">Add Feedback</a>        
+    </form>
+
+    {% for feedback in user.feedback_posts %}
+        <div class="card mt-5" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{feedback.title}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">by {{feedback.username}}</h6>
+              <p class="card-text">{{feedback.content}}</p>
+              <a href="/feedback/{{feedback.id}}/update" class="card-link">Edit</a>
+              <a href="/feedback/{{feedback.id}}/delete" class="card-link">Delete</a>
+            </div>
+        </div>
+    {%  endfor %}        
+{% endblock %}
